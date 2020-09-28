@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Алгоритм Дейкстры</title>
+
+    <link rel="stylesheet" href="../theory.css">
+    <link rel="stylesheet" href="../../navbar/nav.css">
+
+    <script src="https://kit.fontawesome.com/afd0f1462c.js" crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+
+    <script src="../../../SigmaJS/sigma.min.js"></script>
+    <script src="../../../SigmaJS/plugins/sigma.parsers.json.min.js"></script>
+    <script src="../../../SigmaJS/plugins/sigma.plugins.dragNodes.min.js"></script>
+    <script src="../../../SigmaJS/plugins/sigma.renderers.edgeLabels.min.js"></script>
+    <script src="../../../SigmaJS/plugins/sigma.renderers.parallelEdges.min.js"></script>
+
+    <script src="../../../CodeMirror/lib/codemirror.js"></script>
+    <script src="../../../CodeMirror/addon/selection/active-line.js"></script>
+    <script src="../../../CodeMirror/mode/javascript/javascript.js"></script>
+    <link rel="stylesheet" href="../../../CodeMirror/lib/codemirror.css"><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@100&family=Exo+2:wght@100&display=swap" rel="stylesheet">
+
+    <script type="text/javascript"
+            src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+    </script>
+</head>
+<body>
+    <nav class="navbar" id="my-nav">
+        <button class="nav-nav-btn nav-open-btn" style="margin: 0px 20px;">
+            <i class="fa fa-bars" style="color: white;"></i>
+        </button>
+        <a href="../../home/home.html"><img src="../../images/logo-light.png" style="float: right; margin: 8px 20px; width: 120px;"></a>
+    </nav>
+    <div id="menu">
+        <div class="nav-nav nav-nav-black">
+            <div class="nav-nav nav-nav-red">
+                <div class="nav-nav nav-nav-white">
+                    <button class="nav-nav-btn nav-close-btn"><i class="fa fa-times"></i></button>
+                    <img class="nav-logo" src="../../images/logo-dark.png">
+                    <ul class="nav-list">
+                        <li><i class="fa fa-home" aria-hidden="true" style="margin-right: 15px;"></i><a href="../../home/home.html">Главная страница</a></li>
+                        <li><i class="fa fa-pencil" aria-hidden="true" style="margin-right: 15px;"></i><a href="../../graphDemo/graphDemo.html">Демонстрация</a></li>
+                        <li id="theory"><a href="#" style="font-weight: 500;"><i class="fa fa-book" aria-hidden="true" style="margin-right: 15px;"></i>Теория графа <i class="far fa-angle-down"></i></a></li>
+                        <li id="theory-sub" style="display: initial;">
+                            <ul>
+                                <li><a href="../DFS/dfs.html">Поиск в глубину</a></li>
+                                <li><a href="../BFS/bfs.html">Поиск в ширину</a></li>
+                                <li><a href="../Prim/prim.html">Алгоритм Прима</a></li>
+                                <li><a href="../Kruskal/kruskal.html">Алгоритм Краскала</a></li>
+                                <li class="active"><a href="../Dijkstra/dijkstra.html">Алгоритм Дейкстры</a></li>
+                                <li><a href="../Bellman_ford/bellman_ford.html">Алгоритм Форда-Беллмана</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="social-panel-container">
+            <div class="social-panel">
+                <p>Сделано <i class="fa fa-heart"></i>
+                    <a target="_blank" href="https://gitlab.com/thienlongtpct">thienlongtpct</a></p>
+                <button class="close-btn"><i class="fas fa-times"></i></button>
+                <h4>Мои контакты</h4>
+                <ul>
+                    <li>
+                        <a href="https://vk.com/thienlongtpct" target="_blank">
+                            <i class="fab fa-vk"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://instagram.com/thienlongtpct" target="_blank">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://facebook.com/long.vominhthien" target="_blank">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/thienlongtpct" target="_blank">
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <button class="floating-btn">
+            Контакт
+        </button>
+    </div>
+    <div id="my-container">
+        <h2>Алгоритм Дейкстры</h2>
+        <hr>
+        <div class="subtitle" style="font-size: 22px; border: none;">
+            <p>Для заданного взвешенного графа $G=(V,E)$ найти кратчайшие пути из заданной вершины $s$
+                до всех остальных вершин. Веса всех рёбер неотрицательны.</p>
+        </div>
+        <hr>
+        <div class="content">
+            <h4>Алгоритм</h4>
+            <hr>
+            <p>В ориентированном взвешенном графе $G=(V,E)$, вес рёбер которого неотрицателен и
+                определяется весовой функцией $w:E→ℝ$, алгоритм Дейкстры находит длины кратчайших
+                путей из заданной вершины $s$ до всех остальных.</p>
+            <p>В алгоритме поддерживается множество вершин $U$, для которых уже вычислены длины
+                кратчайших путей до них из $s$. На каждой итерации основного цикла выбирается вершина $u∉U$
+                , которой на текущий момент соответствует минимальная оценка кратчайшего пути. Вершина $u$
+                добавляется в множество $U$ и производится релаксация всех исходящих из неё рёбер.</p>
+        </div>
+        <div class="content">
+            <h4>Псевдокод</h4>
+            <hr>
+            <textarea id="pseudoCode"></textarea>
+        </div>
+        <div class="content">
+            <h4>Обоснование корректности</h4>
+            <hr>
+            <div class="sub-content">
+                <h5>Теорема</h5>
+                <div class="subtitle">
+                    <p>Пусть $G=(V,E)$ — ориентированный взвешенный граф, вес рёбер которого неотрицателен,
+                        $s$ — стартовая вершина. Тогда после выполнения алгоритма Дейкстры $d(u)=ρ(s,u)$
+                        для всех $u$, где $ρ(s,u)$ — длина кратчайшего пути из вершины $s$ в вершину $u$</p>
+                </div>
+            </div>
+            <div class="sub-content">
+                <h5>Доказательство</h5>
+                <p>Докажем по индукции, что в момент посещения любой вершины $u$, $d(u)=ρ(s,u)$.</p>
+                <ul>
+                    <li>На первом шаге выбирается $s$, для неё выполнено: $d(s)=ρ(s,s)=0$</li>
+                    <li>Пусть для $n$ первых шагов алгоритм сработал верно и на $n+1$ шагу выбрана вершина $u$.
+                        Докажем, что в этот момент $d(u)=ρ(s,u)$. Для начала отметим, что для любой вершины $v$,
+                        всегда выполняется $d(v) \geq ρ(s,v)$ (алгоритм не может найти путь короче, чем кратчайший
+                        из всех существующих).</li>
+                    <li>Пусть $P$ — кратчайший путь из $s$ в $u$, $v$ — первая
+                        непосещённая вершина на $P$, $z$ — предшествующая ей (следовательно, посещённая).
+                        Поскольку путь $P$ кратчайший, его часть, ведущая из $s$ через $z$ в $v$, тоже кратчайшая,
+                        следовательно $ρ(s,v)=ρ(s,z)+w(zv)$.</li>
+                    <li>По предположению индукции, в момент посещения вершины
+                        $z$ выполнялось $d(z)=ρ(s,z)$, следовательно, вершина $v$ тогда получила метку не больше
+                        чем $d(z)+w(zv)=ρ(s,z)+w(zv)=ρ(s,v)$, следовательно, $d(v)=ρ(s,v)$.</li>
+                    <li>С другой стороны, поскольку сейчас мы выбрали вершину $u$, её метка минимальна среди
+                        непосещённых, то есть $d(u) \leq d(v)=ρ(s,v) \leq ρ(s,u)$, где второе неравенсто верно из-за
+                        ранее упомянутого определения вершины $v$ в качестве первой непосещённой вершины на $P$, то
+                        есть вес пути до промежуточной вершины не превосходит веса пути до конечной вершины вследствие
+                        неотрицательности весовой функции. Комбинируя это с $d(u) \geq ρ(s,u)$, имеем $d(u)=ρ(s,u)$,
+                        что и требовалось доказать.</li>
+                    <li>Поскольку алгоритм заканчивает работу, когда все вершины посещены, в этот момент
+                        $d(u)=ρ(s,u)$ для всех $u$.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="content">
+            <h4>Оценка сложности</h4>
+            <hr>
+            <p>В реализации алгоритма присутствует функция выбора вершины с минимальным значением $d$
+                и релаксация по всем рёбрам для данной вершины. Асимптотика работы зависит от реализации.</p>
+            <p>Пусть $n$ — количество вершин в графе, $m$ — количество рёбер в графе.</p>
+            <table style="width: 100%;">
+                <tr>
+                    <th rowspan="2"  width="8%"></th>
+                    <th colspan="3">Время работы</th>
+                    <th rowspan="2">Описание</th>
+                </tr>
+                <tr>
+                    <th width="12%">Поиск минимума</th>
+                    <th width="12%">Релаксация</th>
+                    <th width="12%">Общее</th>
+                </tr>
+                <tr>
+                    <td width="8%">Наивная реализация</td>
+                    <td width="12%">$O(n)$</td>
+                    <td width="12%">$O(1)$</td>
+                    <td width="12%">$O(n^2+m)$</td>
+                    <td style="font-size: 15px;"><p>$n$ раз осуществляем поиск вершины с минимальной величиной $d$ среди $O(n)$
+                        непомеченных вершин и $m$ раз проводим релаксацию за $O(1)$. Для плотных графов $(m≈n^2)$
+                        данная асимптотика является оптимальной.</p></td>
+                </tr>
+                <tr>
+                    <td width="8%">Двоичная куча</td>
+                    <td width="12%">$O(\log n)$</td>
+                    <td width="12%">$O(\log n)$</td>
+                    <td width="12%">$O(m \log n)$</td>
+                    <td style="font-size: 15px;"><p>Используя двоичную кучу можно выполнять операции извлечения минимума и обновления элемента за
+                        $O(\log n)$. Тогда время работы алгоритма Дейкстры составит $O(n \log n+m \log n) =
+                        O(m \log n)$.</p></td>
+                </tr>
+                <tr>
+                    <td width="8%">Фибоначчиева куча</td>
+                    <td width="12%">$O(\log n)$</td>
+                    <td width="12%">$O(1)$</td>
+                    <td width="12%">$O(n \log n+m)$</td>
+                    <td style="font-size: 15px;"><p>Используя Фибоначчиевы кучи можно выполнять операции извлечения минимума за $O(\log n)$
+                        и обновления элемента за $O(1)$. Таким образом, время работы алгоритма составит
+                        $O(n \log n+m)$.</p></td>
+                </tr>
+            </table>
+            <p>На практике удобно использовать стандартные контейнеры (например, <strong>std::set</strong> или
+                <strong>std::priority_queue</strong> в C++).</p>
+            <p>При реализации необходимо хранить вершины, которые упорядочены по величине $d$,
+                для этого в контейнер можно помещать пару — расстояние-вершина. В результате будут
+                храниться пары, упорядоченные по расстоянию.</p>
+            <p>Изначально поместим в контейнер стартовую вершину $s$. Основной цикл будет выполняться, пока в
+                контейнере есть хотя бы одна вершина. На каждой итерации извлекается вершина с наименьшим расстоянием
+                $d$ и выполняются релаксации по рёбрам из неё. При выполнении успешной релаксации нужно удалить
+                из контейнера вершину, до которой обновляем расстояние, а затем добавить её же,
+                но с новым расстоянием. </p>
+            <p>В обычных кучах нет операции удаления произвольного элемента. При релаксации можно не удалять
+                старые пары, в результате чего в куче может находиться одновременно несколько пар расстояние-вершина
+                для одной вершины (с разными расстояниями). Для корректной работы при извлечении из кучи будем
+                проверять расстояние: пары, в которых расстояние отлично от $d[v]$ будем игнорировать. При этом
+                асимптотика будет $O(m \log m)$ вместо $O(m \log n)$.</p>
+        </div>
+    </div>
+    <script src="dijkstra.js"></script>
+    <script src="../../navbar/nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Главная страница</title>
+
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="../navbar/nav.css">
+
+    <script src="https://kit.fontawesome.com/afd0f1462c.js" crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+
+    <script src="../../SigmaJS/sigma.min.js"></script>
+    <script src="../../SigmaJS/plugins/sigma.parsers.json.min.js"></script>
+    <script src="../../SigmaJS/plugins/sigma.plugins.dragNodes.min.js"></script>
+    <script src="../../SigmaJS/plugins/sigma.renderers.edgeLabels.min.js"></script>
+    <script src="../../SigmaJS/plugins/sigma.renderers.parallelEdges.min.js"></script>
+
+    <script src="../../CodeMirror/lib/codemirror.js"></script>
+    <script src="../../CodeMirror/addon/selection/active-line.js"></script>
+    <script src="../../CodeMirror/mode/javascript/javascript.js"></script>
+    <link rel="stylesheet" href="../../CodeMirror/lib/codemirror.css"><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@100&family=Exo+2:wght@100&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar" id="my-nav">
+        <button class="nav-nav-btn nav-open-btn" style="margin: 0px 20px;">
+            <i class="fa fa-bars" style="color: white;"></i>
+        </button>
+        <a href="../home/home.html"><img src="../images/logo-light.png" style="float: right; margin: 8px 20px; width: 120px;"></a>
+    </nav>
+
+    <div id="menu">
+        <div class="nav-nav nav-nav-black">
+            <div class="nav-nav nav-nav-red">
+                <div class="nav-nav nav-nav-white">
+                    <button class="nav-nav-btn nav-close-btn"><i class="fa fa-times"></i></button>
+                    <img class="nav-logo" src="../images/logo-dark.png">
+                    <ul class="nav-list">
+                        <li class="active"><i class="fa fa-home" aria-hidden="true" style="margin-right: 15px;"></i><a href="../home/home.html">Главная страница</a></li>
+                        <li><i class="fa fa-pencil" aria-hidden="true" style="margin-right: 15px;"></i><a href="../graphDemo/graphDemo.html">Демонстрация</a></li>
+                        <li id="theory"><a href="#"><i class="fa fa-book" aria-hidden="true" style="margin-right: 15px;"></i>Теория графа <i class="far fa-angle-down"></i></a></li>
+                        <li id="theory-sub">
+                            <ul>
+                                <li><a href="../theory/DFS/dfs.html">Поиск в глубину</a></li>
+                                <li><a href="../theory/BFS/bfs.html">Поиск в ширину</a></li>
+                                <li><a href="../theory/Prim/prim.html">Алгоритм Прима</a></li>
+                                <li><a href="../theory/Kruskal/kruskal.html">Алгоритм Краскала</a></li>
+                                <li><a href="../theory/Dijkstra/dijkstra.html">Алгоритм Дейкстры</a></li>
+                                <li><a href="../theory/Bellman_ford/bellman_ford.html">Алгоритм Форда-Беллмана</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="social-panel-container">
+            <div class="social-panel">
+                <p>Сделано <i class="fa fa-heart"></i>
+                    <a target="_blank" href="https://gitlab.com/thienlongtpct">thienlongtpct</a></p>
+                <button class="close-btn"><i class="fas fa-times"></i></button>
+                <h4>Мои контакты</h4>
+                <ul>
+                    <li>
+                        <a href="https://vk.com/thienlongtpct" target="_blank">
+                            <i class="fab fa-vk"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://instagram.com/thienlongtpct" target="_blank">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://facebook.com/long.vominhthien" target="_blank">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/thienlongtpct" target="_blank">
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <button class="floating-btn">
+            Контакт
+        </button>
+    </div>
+
+    <div id="my-container">
+        <div id="my-header">
+            <div id="introGraphContainer">
+                <div id="introGraph"></div>
+            </div>
+            <div class="my-logo">
+                <img src="../images/logo-dark.png" style="width: 250px; display: inline-block">
+            </div>
+        </div>
+        <hr>
+        <div style="font-size: 22px; font-family: 'Exo 2', sans-serif;">
+            <p>Это мой проект по дисциплине Программирования, который использует <strong>Spring Framework</strong> для бэк-энда, <strong>HTML5, CSS, Javascript</strong>
+                для фронт-энда, чтобы построить граф и выполнить алгоритм в нем.</p>
+        </div>
+        <hr>
+        <div class="content">
+            <h4>Особенности</h4>
+            <hr>
+            <p>В этом проекте, я испольвовал языки и библиотеки ниже.</p>
+            <div style="float: left; width: 47%;">
+                <h5>Бзк-энд</h5>
+                <ul style="list-style: none;">
+                    <li><img src="../images/libraries.png" width="20px" style="margin-right: 10px;">
+                        Библиотеки: Spring Framework, стандартные библиотеки.</li>
+                    <br>
+                    <li><img src="../images/languages.png" width="20px" style="margin-right: 10px;">
+                        Язык: Java.</li>
+                </ul>
+            </div>
+            <div style="float: right; width: 47%;">
+                <h5>Фронт-энд</h5>
+                <ul style="list-style: none;">
+                    <li><img src="../images/libraries.png" width="20px" style="margin-right: 10px;">
+                        Библиотеки: Bootstrap, Bootstrap Select, MathJax, Font Awesome, JQuery, CodeMirror (для code-snippet), SigmaJS (для построения графа)</li>
+                    <li><img src="../images/languages.png" width="20px" style="margin-right: 10px;">
+                        Язык: HTML, CSS, Javascript.</li>
+                </ul>
+            </div>
+            <div style="clear: both"></div>
+        </div>
+        <div class="content">
+            <h4>Использованные библиотеки для демонстрации</h4>
+            <hr>
+            <p>В этом проекте, я испольвовал библиотеки ниже для демонстрации.</p>
+            <div id="sigmaJS">
+                <h5>SigmaJS</h5>
+                    <p>Sigma - это библиотека JavaScript, <strong>предназначенная для рисования графиков</strong>.
+                        Это облегчает публикацию сетей на веб-страницах и позволяет разработчикам интегрировать
+                        исследование сети в многофункциональные веб-приложения.</p>
+                    <p>Sigma предоставляет множество встроенных функций, таких как рендеры Canvas и WebGL
+                        или поддержка мыши и сенсорного ввода, что делает работу с сетью на веб-страницах
+                        гладкой и быстрой для пользователя.</p>
+                <div id="graphContainer">
+                    <div id="graph"></div>
+                </div>
+            </div>
+            <div id="codeMirror">
+                <h5>CodeMirror</h5>
+                    <p>CodeMirror - это <strong>универсальный текстовый редактор</strong>, реализованный на
+                        JavaScript для браузера.Он специализируется на редактировании кода и поставляется
+                        с рядом языковых режимов и дополнений, которые реализуют более продвинутые
+                        функциональные возможности редактирования.</p>
+                    <p>Богатый API-интерфейс и система тем CSS доступны для настройки CodeMirror в
+                        соответствии с вашим приложением и расширения его новыми функциями.</p>
+                    <textarea id="inputSample" autofocus></textarea>
+            </div>
+        </div>
+    </div>
+    <script src="home.js"></script>
+    <script src="../navbar/nav.js"></script>
+</body>
+</html>

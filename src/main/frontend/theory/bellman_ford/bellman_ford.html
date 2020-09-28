@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Алгоритм Форда-Беллмана</title>
+
+    <link rel="stylesheet" href="../theory.css">
+    <link rel="stylesheet" href="../../navbar/nav.css">
+
+    <script src="https://kit.fontawesome.com/afd0f1462c.js" crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+
+    <script src="../../../SigmaJS/sigma.min.js"></script>
+    <script src="../../../SigmaJS/plugins/sigma.parsers.json.min.js"></script>
+    <script src="../../../SigmaJS/plugins/sigma.plugins.dragNodes.min.js"></script>
+    <script src="../../../SigmaJS/plugins/sigma.renderers.edgeLabels.min.js"></script>
+    <script src="../../../SigmaJS/plugins/sigma.renderers.parallelEdges.min.js"></script>
+
+    <script src="../../../CodeMirror/lib/codemirror.js"></script>
+    <script src="../../../CodeMirror/addon/selection/active-line.js"></script>
+    <script src="../../../CodeMirror/mode/javascript/javascript.js"></script>
+    <link rel="stylesheet" href="../../../CodeMirror/lib/codemirror.css"><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@100&family=Exo+2:wght@100&display=swap" rel="stylesheet">
+
+    <script type="text/javascript"
+            src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+    </script>
+</head>
+<body>
+    <nav class="navbar" id="my-nav">
+        <button class="nav-nav-btn nav-open-btn" style="margin: 0px 20px;">
+            <i class="fa fa-bars" style="color: white;"></i>
+        </button>
+        <a href="../../home/home.html"><img src="../../images/logo-light.png" style="float: right; margin: 8px 20px; width: 120px;"></a>
+    </nav>
+    <div id="menu">
+        <div class="nav-nav nav-nav-black">
+            <div class="nav-nav nav-nav-red">
+                <div class="nav-nav nav-nav-white">
+                    <button class="nav-nav-btn nav-close-btn"><i class="fa fa-times"></i></button>
+                    <img class="nav-logo" src="../../images/logo-dark.png">
+                    <ul class="nav-list">
+                        <li><i class="fa fa-home" aria-hidden="true" style="margin-right: 15px;"></i><a href="../../home/home.html">Главная страница</a></li>
+                        <li><i class="fa fa-pencil" aria-hidden="true" style="margin-right: 15px;"></i><a href="../../graphDemo/graphDemo.html">Демонстрация</a></li>
+                        <li id="theory"><a href="#" style="font-weight: 500;"><i class="fa fa-book" aria-hidden="true" style="margin-right: 15px;"></i>Теория графа <i class="far fa-angle-down"></i></a></li>
+                        <li id="theory-sub" style="display: initial;">
+                            <ul>
+                                <li><a href="../DFS/dfs.html">Поиск в глубину</a></li>
+                                <li><a href="../BFS/bfs.html">Поиск в ширину</a></li>
+                                <li><a href="../Prim/prim.html">Алгоритм Прима</a></li>
+                                <li><a href="../Kruskal/kruskal.html">Алгоритм Краскала</a></li>
+                                <li><a href="../Dijkstra/dijkstra.html">Алгоритм Дейкстры</a></li>
+                                <li class="active"><a href="../Bellman_ford/bellman_ford.html">Алгоритм Форда-Беллмана</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="social-panel-container">
+            <div class="social-panel">
+                <p>Сделано <i class="fa fa-heart"></i>
+                    <a target="_blank" href="https://gitlab.com/thienlongtpct">thienlongtpct</a></p>
+                <button class="close-btn"><i class="fas fa-times"></i></button>
+                <h4>Мои контакты</h4>
+                <ul>
+                    <li>
+                        <a href="https://vk.com/thienlongtpct" target="_blank">
+                            <i class="fab fa-vk"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://instagram.com/thienlongtpct" target="_blank">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://facebook.com/long.vominhthien" target="_blank">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/thienlongtpct" target="_blank">
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <button class="floating-btn">
+            Контакт
+        </button>
+    </div>
+    <div id="my-container">
+        <h2>Алгоритм Форда-Беллмана</h2>
+        <hr>
+        <div class="subtitle" style="font-size: 22px; border: none;">
+            <p>Для заданного взвешенного графа $G=(V,E)$ найти кратчайшие пути из заданной вершины $s$ до
+                всех остальных вершин. В случае, когда в графе $G$ содержатся отрицательные циклы, достижимые
+                из $s$, сообщить, что кратчайших путей не существует.</p>
+        </div>
+        <hr>
+        <div class="content">
+            <h4>Введение</h4>
+            <hr>
+            <p>Количество путей длины $k$ рёбер можно найти с помощью метода динамического программирования.</p>
+            <p>Пусть $d[k][u]$ — количество путей длины $k$ рёбер, заканчивающихся в вершине $u$. Тогда
+                $d[k][u]=∑_{v:vu∈E}d[k−1][v]$.</p>
+            <p>Аналогично посчитаем пути кратчайшей длины. Пусть $s$ — стартовая вершина. Тогда
+                $d[k][u]=min_{v:vu∈E}(d[k−1][v]+ω(u,v))$, при этом $d[0][s]=0$, а $d[0][u]=+∞$.</p>
+            <div class="sub-content">
+                <h5>Лемма</h5>
+                <div class="subtitle">
+                    <p>Если существует кратчайший путь от $s$ до $t$, то $ρ(s,t)=\underset{k=0..n−1}{min}d[k][t]$</p>
+                </div>
+            </div>
+            <div class="sub-content">
+                <h5>Доказательство</h5>
+                <p>Пусть кратчайший путь состоит из $k$ ребер, тогда корректность формулы следует из
+                    динамики, приведенной ниже.</p>
+            </div>
+        </div>
+        <div class="content">
+            <h4>Псевдокод</h4>
+            <hr>
+            <p>Используя приведенные формулы, алгоритм можно реализовать методом динамического программирования.</p>
+            <textarea id="pseudoCode"></textarea>
+            <p style="margin-top: 20px;">Также релаксацию можно свести к одномерному случаю, если не хранить длину пути в рёбрах.
+                Одномерный массив будем обозначать $d′$, тогда $d′[u]=min(d′[u],d′[v]+ω(vu))$</p>
+        </div>
+        <div class="content">
+            <h4>Корректность</h4>
+            <hr>
+            <div class="sub-content">
+                <h5>Лемма</h5>
+                <p>Пусть $G=(V,E)$ — взвешенный ориентированный граф, $s$ — стартовая вершина. Тогда после
+                    завершения $k$ итераций цикла $for$ выполняется неравенство
+                    $ρ(s,u) \leq d′[u] \leq \underset {i=0..k} {min} d[i][u]$</p>
+            </div>
+            <div class="sub-content">
+                <h5>Доказательство</h5>
+                <p>Воспользуемся индукцией по $k$:</p>
+                <div class="sub-content">
+                    <strong>База индукции</strong>
+                    <p>При $k=0$ выполнено: $ρ(s,u) \leq +∞$</p>
+                </div>
+                <div class="sub-content">
+                    <strong>Индукционный переход</strong>
+                    <p>Сначала докажем, что $ρ(s,u) \leq d′[u]$.</p>
+                    <p>Пусть после $k−1$ итерации выполняется $ρ(s,u) \leq d′[u] \leq
+                        \underset{i=0..k−1}{min}d[i][u]$ для всех $u$.</p>
+                    <p>Тогда после $k$
+                        итераций $ρ(s,v)= \underset {u∈V} {min} (ρ(s,u)+ω(uv)) \leq
+                        \underset{u∈V}{min}(d′[u]+ω(uv))=d′[v]$.</p>
+                    <p>Переходим ко второму неравенству.</p>
+                    <p>Теперь возможно два случая:</p>
+                    <ol>
+                        <li>$\underset {i=0..k+1} {min} d[i][u]=d[k+1][u]$</li>
+                        <li>$\underset {i=0..k+1} {min} d[i][u]=d[j][u]= \underset {i=0..j} {min} d[i][u]$</li>
+                    </ol>
+                    <p>Рассмотрим 1 случай: $\underset {i=0..k+1} {min} d[i][u]=d[k+1][u]$</p>
+                    <p>$d′[u] \leq d′[v]+ω(vu) \leq d[k][v]+ω(vu)=d[k+1][u]$, 2 случай расписывается аналогично.</p>
+                    <p>Таким образом переход выполнен и $ρ(s,u) \leq d′[u] \leq \underset {i=0..k} {min} d[i][u]$
+                        выполняется.</p>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <h4>Реализация алгоритма и ее корректность</h4>
+            <hr>
+            <textarea id="minPath"></textarea>
+            <p style="margin-top: 20px;">В этом алгоритме используется релаксация, в результате которой $d[v]$
+                уменьшается до тех пор, пока не станет равным $δ(s,v)$. $d[v]$ — оценка веса кратчайшего пути
+                из вершины $s$ в каждую вершину $v∈V$.</p>
+            <p>$δ(s,v)$ — фактический вес кратчайшего пути из $s$ в вершину $v$.</p>
+            <div class="sub-content">
+                <h5>Лемма</h5>
+                <p>Пусть $G=(V,E)$ — взвешенный ориентированный граф, $s$ — стартовая вершина. Тогда после
+                    завершения $|V|−1$ итераций цикла для всех вершин, достижимых из $s$, выполняется
+                    равенство $d[v]=δ(s,v)$.</p>
+            </div>
+            <div class="sub-content">
+                <h5>Доказательство</h5>
+                <p>Рассмотрим произвольную вершину $v$, достижимую из $s$. Пусть $p=⟨v_{0},...,v_{k}⟩$,
+                    где $v_{0}=s$, $v_{k}=v$ — кратчайший ациклический путь из $s$ в $v$. Путь $p$
+                    содержит не более $|V|−1$ ребер. Поэтому $k \leq |V|−1$.</p>
+                <p>Докажем следующее утверждение:</p>
+                <div class="sub-content">
+                    <p>После $n:(n \leq k)$ итераций первого цикла алгоритма, $d[v_{n}]=δ(s,v_{n}).$</p>
+                </div>
+                <p>Воспользуемся индукцией по $n$:</p>
+                <div class="sub-content">
+                    <strong>База индукции</strong>
+                    <p>Пусть после $n:(n < k)$ итераций, верно что $d[v_{n}]=δ(s,v_{n})$. Так как
+                        $(v_{n},v_{n+1}) принадлежит кратчайшему пути от $s$, то
+                        $δ(s,v_{n+1})=δ(s,v_n)+ω(v_n,v_{n+1})$. Во время $l+1$ итерации релаксируется
+                        ребро $(v_n,v_{n+1})$, следовательно по завершению итерации будет выполнено
+                        $d[v_{n+1}] \leq d[v_n]+ω(v_n,v_{n+1})=δ(s,v_n)+ω(v_n,v_{n+1})=δ(s,v_{n+1})$.</p>
+                    <p>Ясно, что $d[v_{n+1}] \geq δ(s,v_{n+1})$, поэтому верно что после $l+1$ итерации
+                        d[v_{n+1}]=δ(s,v_{n+1}).</p>
+                    <p>Индукционный переход доказан.</p>
+                </div>
+            </div>
+            <div class="sub-content">
+                <h5>Теорема</h5>
+                <div class="subtitle">
+                    <p>Пусть $G=(V,E)$ — взвешенный ориентированный граф, $s$ — стартовая вершина. Если граф $G$
+                        не содержит отрицательных циклов, достижимых из вершины $s$, то алгоритм возвращает $true$
+                        и для всех $v∈V d[v]=δ(s,v)$. Если граф $G$ содержит отрицательные циклы, достижимые из
+                        вершины $s$, то алгоритм возвращает $false$.</p>
+                </div>
+            </div>
+            <div class="sub-content">
+                <h5>Доказательство</h5>
+                <p>Пусть граф $G$ не содержит отрицательных циклов, достижимых из вершины $s$.</p>
+                <p>Тогда если вершина $v$ достижима из $s$, то по лемме $d[v]=δ(s,v)$. Если вершина $v$
+                    не достижима из $s$, то $d[v]=δ(s,v)=1$ из несуществования пути.</p>
+                <p>Теперь докажем, что алгоритм вернет значение $true$.</p>
+                <p>После выполнения алгоритма верно, что для всех $(u,v)∈E, d[v]=δ(s,v) \leq δ(s,u)+ω(u,v)=d[u]+ω(u,v)$,
+                    значит ни одна из проверок не вернет значения $false$.</p>
+                <p>Пусть граф $G$ содержит отрицательный цикл $c=v_0,...,v_k$ , где $v_0=v_k$, достижимый
+                    из вершины $s$. Тогда $∑_{i=1}^{k}ω(v_{i−1},v_i)<0$.</p>
+                <p>Предположим, что алгоритм возвращает $true$, тогда для $i=1,...,k$ выполняется
+                    $d[v_i] \leq d[v_{i−1}]+ω(v_{i−1},v_i)$.</p>
+                <p>Просуммируем эти неравенства по всему циклу:
+                    $∑_{i=1}^{k}d[vi] \leq ∑_{i=1}^{k}d[vi−1]+∑_{i=1}^{k}ω(vi−1,vi).</p>
+                <p>Из того, что $v_0=v_k$ следует, что $∑_{i=1}^{k}d[vi]=∑_{i=1}^{k}d[v_{i−1}].</p>
+                <p>Получили, что $∑_{i=1}^{k}ω(vi−1,vi) \geq 0$, что противоречит отрицательности цикла $c$.</p>
+            </div>
+        </div>
+        <div class="content">
+            <h4>Сложность</h4>
+            <hr>
+            <p>Инициализация занимает $Θ(V)$ времени, каждый из $|V|−1$ проходов требует $Θ(E)$ времени,
+                обход по всем ребрам для проверки наличия отрицательного цикла занимает $O(E)$
+                времени. Значит алгоритм Беллмана-Форда работает за $O(VE)$ времени.</p>
+        </div>
+        <div class="content">
+            <h4>Нахождение отрицательного цикла</h4>
+            <hr>
+            <p>Приведенная выше реализация позволяет определить наличие в графе цикла отрицательного веса.
+                Чтобы найти сам цикл, достаточно хранить вершины, из которых производится релаксация.</p>
+            <p>Если после $|V|−1$ итерации найдется вершина $v$, расстояние до которой можно уменьшить,
+                то эта вершина либо лежит на каком-нибудь цикле отрицательного веса, либо достижима из него.
+                Чтобы найти вершину, которая лежит на цикле, можно $|V|−1$ раз пройти назад по предкам из вершины
+                $v$. Так как наибольшая длина пути в графе из $|V|$ вершин равна $|V|−1$, то полученная вершина
+                $u$ будет гарантированно лежать на отрицательном цикле.</p>
+            <p>Зная, что вершина $u$ лежит на цикле отрицательного веса, можно восстанавливать путь по сохраненным
+                вершинам до тех пор, пока не встретится та же вершина $u$. Это обязательно произойдет, так как в
+                цикле отрицательного веса релаксации происходят по кругу.</p>
+            <textarea id="negativeLoop"></textarea>
+        </div>
+    </div>
+    <script src="bellman_ford.js"></script>
+    <script src="../../navbar/nav.js"></script>
+</body>
+</html>
